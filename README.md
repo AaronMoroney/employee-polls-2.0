@@ -1,0 +1,3 @@
+```
+REACT-TYPESCRIPT-REDUX-FSD
+```
