@@ -8,7 +8,6 @@ import { ThemeToggle } from 'features/theme'
 
 const styles = {
     layout__container: {
-        marginLeft: '10px',
         display: 'flex',
         flexDirection: 'row',
     },
