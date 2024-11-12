@@ -1,13 +1,11 @@
 import * as React from  'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { Box } from '@mui/material';
-import { Typography } from "@mui/material";
+import { 
+    Box, 
+    Typography 
+} from '@mui/material';
 
 import { Leaderboard, ToggleTimePeriod } from 'features/leaderboard';
-import { getUsers } from 'entities/users/model/actions';
-import { UsersAction } from 'entities/users/model/types';
-import { AppState } from 'app/providers/with-redux/types';
+import { useUsersActions, useUsersState } from 'entities/users/model';
 
 const styles = {
     leader__page__container: {
@@ -24,13 +22,13 @@ const styles = {
 }
 
 const LeaderPage = () => {
-    const dispatch = useDispatch<ThunkDispatch<{}, {}, UsersAction>>();
+    const { getUsers } = useUsersActions();
+    const { users } = useUsersState();
     
     React.useEffect(() => {
-        dispatch(getUsers());
-    }, [dispatch]);
+        getUsers();
+    }, []);
 
-    const users = useSelector((state: AppState) => state.users.users);
     return (
         <>
             <Typography variant='h4'>

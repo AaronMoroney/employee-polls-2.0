@@ -1,26 +1,27 @@
-import { UsersAction } from '../../../shared/types/users'
+import { createReducer } from '@reduxjs/toolkit';
 
-const initialUsersState = {
-    id:'',
-    password: '',
-    name: '',
-    avatarURL: null,
-    answers: {},
-    questions: [],
+import * as actions from './actions';
+import { User } from './types';
+
+interface State {
+    users: User[] | [];
+    pending: boolean;
 }
 
-export const usersReducer = (
-    state = initialUsersState, 
-    action: UsersAction
-) => {
-    switch(action.type) {
-        case 'FETCH_USERS_REQUEST':
-            return {...state};
-        case 'FETCH_USERS_SUCCESS':
-            return {...state, users: action.payload};
-        case 'FETCH_USERS_FAILURE':
-            return {...state};
-        default:
-            return state;
-    }
+const initialUsersState: State = {
+    users: [],
+    pending: false,
 }
+
+export const usersReducer = createReducer(initialUsersState, (builder) => {
+    builder.addCase(actions.getUsers, (state) => {
+       state.pending = true;
+    })
+    builder.addCase(actions.getUsersSuccess, (state, action) => {
+        state.users = action.payload ?? [];
+        state.pending = false;
+    })
+    builder.addCase(actions.getUsersFailure, (state) => {
+        state.pending = false;
+    })
+});

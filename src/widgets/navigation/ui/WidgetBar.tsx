@@ -9,46 +9,33 @@ import {
     Engagement,
 } from 'widgets/calender'
 
+const styles = {
+    root: {
+        display: 'flex', 
+        flexDirection: 'column', 
+        width: '20vh'
+    },
+    paper: {
+        height: '14vh',
+        marginTop: '30px', 
+        borderRadius: '30px', 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'center', 
+        padding: '10px 10px 10px 15px'
+    }, 
+}
+
 const Widgetbar = () => {
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', width: '20vh'}}>
-            <Paper
-                sx={{ 
-                    height: '14vh',
-                    marginTop: '30px', 
-                    borderRadius: '30px', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    justifyContent: 'center', 
-                    padding: '10px 10px 10px 15px'
-                }}
-            >
+        <Box sx={styles.root}>
+            <Paper sx={styles.paper}>
                 <Time />
             </Paper>
-            <Paper
-                sx={{ 
-                    height: '14vh',
-                    marginTop: '30px', 
-                    borderRadius: '30px', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    justifyContent: 'center', 
-                    padding: '10px 10px 10px 15px'
-                }}
-            >
+            <Paper sx={styles.paper}>
                 <TodaysDate />
             </Paper>
-            <Paper
-                sx={{ 
-                    height: '14vh',
-                    marginTop: '30px', 
-                    borderRadius: '30px', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    justifyContent: 'center', 
-                    padding: '10px 10px 10px 15px'
-                }}
-            >
+            <Paper sx={styles.paper}>
                <Engagement />
             </Paper>
         </Box>

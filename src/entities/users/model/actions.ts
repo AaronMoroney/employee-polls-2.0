@@ -1,16 +1,5 @@
-import { Dispatch } from 'redux';
+import { createAction } from '@reduxjs/toolkit';
 
-import { UsersAction } from 'entities/users/model/types'
-import { getUsersReq } from 'entities/users/api/api';
-
-export const getUsers = () => {
-  return async(dispatch: Dispatch<UsersAction>) => {
-    dispatch({type: 'FETCH_USERS_REQUEST'});
-    try{
-      const data = await getUsersReq();
-      dispatch({ type: 'FETCH_USERS_SUCCESS', payload: data})
-    } catch {
-      dispatch({ type: 'FETCH_USERS_FAILURE'})
-    }
-  };
-}
+export const getUsers = createAction('FETCH_USERS_REQUEST');
+export const getUsersSuccess = createAction('FETCH_USERS_SUCCESS');
+export const getUsersFailure = createAction('FETCH_USERS_FAILURE');

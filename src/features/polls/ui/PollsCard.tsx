@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    Card, 
+    Paper,
     Avatar,
     Box, 
     CardContent, 
@@ -14,7 +14,7 @@ import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import { Link } from 'react-router-dom';
 
-import { Questions} from 'entities/questions/model/types';
+import { Questions } from 'entities/questions/model/types';
 
 const styles = {
     PollCard: {
@@ -44,6 +44,12 @@ const styles = {
         flexDirection: 'row', 
         justifyContent: 'flex-end'
     },
+    pollCard__header: (theme: any) => ({
+        padding: '1% 2%', 
+        marginBottom: '2%', 
+        backgroundColor:  'theme.palette.background',
+        borderRadius: '30px', 
+    }),
 };
 
 interface PollsCardsProps {
@@ -53,26 +59,14 @@ interface PollsCardsProps {
 const PollsCard: React.FC<PollsCardsProps> = (props) => {
     const { question } = props; 
 
-    let completed = false;
-    const theme = useTheme();
+    // let completed = false;
 
     //calculate votes totals
-    // const votes = question.optionOne.votes.length + question.optionTwo.votes.length;
-
-    const DynamicStyles = {
-        PollCard__header: {
-            padding: '1% 2%', 
-            marginBottom: '2%', 
-            backgroundColor: completed ? theme.palette.background.completedPaper : theme.palette.background.paper
-        },
-    };
+    //const votes = question.optionOne.votes.length + question.optionTwo.votes.length;
 
     return (
         <>
-            <Card 
-                sx={[ DynamicStyles.PollCard__header]}
-                variant='outlined'
-            >
+            <Paper sx={styles.pollCard__header}>
                 <Box sx={styles.PollCard}>
                     <Box sx={styles.PollCard__header__container}>
                         <Avatar
@@ -114,7 +108,7 @@ const PollsCard: React.FC<PollsCardsProps> = (props) => {
                             </Button>
                     </Link>
                 </Box>
-            </Card>
+            </Paper>
         </>
     )
 }
