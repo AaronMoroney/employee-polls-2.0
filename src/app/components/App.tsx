@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { Auth } from 'pages/auth';
@@ -10,7 +9,7 @@ import { Question } from 'pages/question'
 import { Settings } from 'pages/settings'
 import { Create } from 'pages/create'
 import { Layout } from 'app/components';
-import { selectIsAuth } from 'entities/authUsers/model/selectors';
+import { useIsAuthState } from 'entities/authUsers/model';
 
 // JSON server auth issues resolve: 
 // https://stackblitz.com/edit/stackoverflow-questions-78271234?file=package.json
@@ -21,10 +20,10 @@ interface AuthWrapper {
 }
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = useSelector(selectIsAuth);
+  const isAuth  = useIsAuthState();
   const hasAuthKey = localStorage.getItem('access');
 
-  return isAuthenticated && hasAuthKey
+  return isAuth && hasAuthKey
     ? ( <>{children}</> ) 
     : ( <Navigate to="/" replace /> );
 };
@@ -32,19 +31,48 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Auth />} />
-      <Route
-        element={
-          <AuthWrapper>
-            <Layout />
-          </AuthWrapper>
-        }
-      >
-        <Route path="/home" element={<Home />} />
-        <Route path="/questions/:question_id" element={<Question />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/create" element={<Create />} />
+      <Route path="/" element={<Auth/>} />
+      <Route element={<Layout/>}>
+        <Route 
+          path="/home" 
+          element={
+            <AuthWrapper>
+              <Home/>
+            </AuthWrapper>
+          } 
+        />
+        <Route 
+          path="/questions/:question_id" 
+          element={
+            <AuthWrapper>
+              <Question/>
+            </AuthWrapper>
+          } 
+        />
+        <Route 
+          path="/settings" 
+          element={
+            <AuthWrapper>
+              <Settings/>
+            </AuthWrapper>
+            } 
+          />
+        <Route 
+          path="/leaderboard" 
+          element={
+            <AuthWrapper>
+              <Leaderboard/>
+            </AuthWrapper>
+          } 
+        />
+        <Route 
+          path="/create" 
+          element={
+            <AuthWrapper>
+              <Create />
+            </AuthWrapper>
+          }
+        />
       </Route>
     </Routes>
   );
