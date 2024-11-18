@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { 
     MenuItem, 
     MenuList,
@@ -23,7 +24,7 @@ const styles = {
         display: 'flex', 
         flexDirection: 'column',
         justifyContent: 'center', 
-        padding: '10px'
+        padding: '10px',
     },
     MenuList :{
         height: '100%', 
@@ -40,19 +41,17 @@ const styles = {
 
 const Sidebar = () => {
     const { logoutUser } = useUserActions();
-    const navigate = useNavigate();
 
-    const logout = () => {
+    const logout = React.useCallback(() => {
         logoutUser();
-        navigate('/');
-    }
+    }, [logoutUser]);
 
     return (
         <Paper sx={styles.root}>
             <MenuList sx={styles.MenuList}>
                 <div>
                     <Link 
-                        to="/" 
+                        to="/home" 
                         style={styles.link}
                     >
                         <MenuItem>
@@ -62,6 +61,7 @@ const Sidebar = () => {
                             <ListItemText>Home</ListItemText>
                         </MenuItem>
                     </Link>
+
                     <Link 
                         to="/create" 
                         style={styles.link}
@@ -92,10 +92,11 @@ const Sidebar = () => {
                         </MenuItem>
                     </Link>
                 </div>
+
                 <div>
                     <MenuItem onClick={logout}>
                         <ListItemIcon>
-                            <LogoutIcon  />
+                            <LogoutIcon/>
                         </ListItemIcon>
                         <ListItemText>Logout</ListItemText>
                     </MenuItem>
@@ -103,6 +104,6 @@ const Sidebar = () => {
             </MenuList>
         </Paper>
     )
-}
+};
 
-export default Sidebar
+export default Sidebar;

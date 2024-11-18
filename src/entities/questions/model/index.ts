@@ -3,10 +3,10 @@ import { bindActionCreators } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchPostsSuccess, fetchPostsError, fetchPosts } from './actions';
-import { AppState } from 'app/providers/with-redux/types';
+import { questionsSelector } from './selectors';
 
 export function useQuestionsState() {
-    return useSelector((state: AppState) => state.questions);
+    return useSelector(questionsSelector);
 }
 
 export function useQuestionsActions() {

@@ -1,10 +1,10 @@
+import * as React from 'react';
 import { Outlet } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { Sidebar, WidgetBar, Navigation } from 'widgets/navigation';
 import { ThemeToggle } from 'features/theme'
+import BackButton  from './BackButton';
 
 const styles = {
     layout__container: {
@@ -24,17 +24,8 @@ const styles = {
         padding: '0px 35px',
     },
 };
+
 const Layout = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const home = location.pathname === "/home";
-    const create = location.pathname === "/create";
-
-    const handleBack = () => {
-        navigate(-1);
-    }
-
     return (
         <>
             <ThemeToggle/>
@@ -45,7 +36,7 @@ const Layout = () => {
                 <Sidebar/>
                 <Box sx={styles.layout__content__parent}>
                     <Box sx={styles.layout__content__container}>
-                        {!home && !create && ( <ArrowBackIcon onClick={handleBack} />)}
+                        <BackButton/>
                         <Outlet/>
                     </Box>
                 </Box>
@@ -53,6 +44,6 @@ const Layout = () => {
             </Box>
         </>
     )
-}
+};
 
-export default Layout
+export default React.memo(Layout);

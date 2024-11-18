@@ -9,6 +9,7 @@ const ThemeToggle = () => {
     const handleToggleTheme = () => {
         setTheme(!theme);
     }
+
     return (
         <>  
             <div style={{ display: 'flex',  flexDirection: 'row'  }}>

@@ -7,8 +7,7 @@ import {
     Typography,  
     Button, 
     Divider
-} from '@mui/material'
-import { useTheme } from '@mui/material/styles';
+} from '@mui/material';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
@@ -113,4 +112,4 @@ const PollsCard: React.FC<PollsCardsProps> = (props) => {
     )
 }
 
-export default PollsCard
+export default PollsCard;
