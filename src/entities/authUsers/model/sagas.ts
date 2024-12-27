@@ -2,62 +2,78 @@ import { put, takeEvery, call, take } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import { addUsersReq, loginReq } from 'entities/authUsers/api/api';
+import * as alerts from 'shared/lib/alert/model/actions';
 
 function* addUsersSaga({
-    payload: { email, password }
+	payload: { email, password },
 }: ReturnType<typeof actions.addUsers>) {
-    // TODO: is this coming from components anyway?
-    if (!email || !password) {
-        return;
-    }
+	// TODO: is this coming from components anyway?
+	if (!email || !password) {
+		return;
+	}
 
-    const initialUsersData = {
-        email, 
-        password, 
-        avatarURL: null,
-        answers: {},
-        questions: [],  
-    }
+	const initialUsersData = {
+		email,
+		password,
+		avatarURL: null,
+		answers: {},
+		questions: [],
+	};
 
-    const apiCall = addUsersReq(initialUsersData);
-    const response = yield call(() => apiCall);
+	const apiCall = addUsersReq(initialUsersData);
+	const response = yield call(() => apiCall);
 
-    if (response.error) {
-        actions.addUsersFailure();
-    }
+	if (response.error) {
+		yield put(actions.addUsersFailure());
+		yield put(
+			alerts.showAlert({
+				message: response.error,
+				severity: 'error',
+				isOpen: true,
+			})
+		);
+		return;
+	}
 
-    yield put(actions.addUsersSuccess(response));
+	yield put(actions.addUsersSuccess(response));
 }
 
 function* loginUsersSaga({
-    payload: { email, password }
+	payload: { email, password },
 }: ReturnType<typeof actions.loginUsers>) {
-    if (!email || !password) {
-        return;
-    }
+	if (!email || !password) {
+		return;
+	}
 
-    const apiCall = loginReq({ email, password });
-    const response = yield call(() => apiCall);
+	const apiCall = loginReq({ email, password });
+	const response = yield call(() => apiCall);
 
-    if (response.error) {
-        actions.loginUsersFailure();
-        return;
-    }
+	if (response.error) {
+		yield put(actions.loginUsersFailure());
+		yield put(
+			alerts.showAlert({
+				message: response.error,
+				severity: 'error',
+				isOpen: true,
+			})
+		);
+		return;
+	}
 
-    if (response.accessToken) {
-        localStorage.setItem('access', response.accessToken);
-        yield put(actions.loginUsersSuccess(response));
-    }
+	if (response.accessToken) {
+		localStorage.setItem('access', response.accessToken);
+		yield put(actions.loginUsersSuccess(response));
+	}
 }
 
 function* logoutUserSaga() {
-    localStorage.removeItem('access');
+	localStorage.removeItem('access');
 }
 
 export function* isAuthWatcher() {
-    yield takeEvery(actions.addUsers, addUsersSaga);
-    yield takeEvery(actions.loginUsers, loginUsersSaga);
-    yield takeEvery(actions.logoutUser, logoutUserSaga);
+	yield takeEvery(actions.addUsers, addUsersSaga);
+	yield takeEvery(actions.loginUsers, loginUsersSaga);
+	yield takeEvery(actions.logoutUser, logoutUserSaga);
 }
 
 export default [isAuthWatcher];
