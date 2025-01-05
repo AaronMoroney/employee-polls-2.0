@@ -4,7 +4,6 @@ export const validatePasswordMatch = (
     errorState: React.Dispatch<React.SetStateAction<boolean>>,
     errorValidateMessage: React.Dispatch<React.SetStateAction<string>>
 ): boolean => {
-    console.log(password, confirmPassword);
     if (password === confirmPassword) {
         errorState(false);
         errorValidateMessage('');

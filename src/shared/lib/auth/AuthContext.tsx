@@ -1,5 +1,6 @@
 import * as React from 'react';
 
-import { selectIsAuth } from 'entities/authUsers/model/selectors';
+import { useIsAuthState } from 'entities/authUsers/model';
 
+const { selectIsAuth } = useIsAuthState();
 export const AuthContext = React.createContext(selectIsAuth);
