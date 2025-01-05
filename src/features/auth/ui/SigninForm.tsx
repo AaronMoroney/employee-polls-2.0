@@ -15,8 +15,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { useUserActions } from 'entities/authUsers/model';
+import { useIsAuthState } from 'entities/authUsers/model';
 import { SignInFormType } from 'entities/authUsers/model/types';
 import { selectIsAuth } from 'entities/authUsers/model/selectors';
+
 
 const styles = {
 	textFields: {
@@ -32,7 +34,7 @@ const styles = {
 const SigninForm: React.FC = () => {
 	const navigate = useNavigate();
 	const { loginUsers } = useUserActions();
-	const isAuthenticated = useSelector(selectIsAuth);
+	const { selectIsAuth } = useIsAuthState();
 
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [signinForm, setSigninForm] = React.useState<SignInFormType>({
@@ -73,10 +75,10 @@ const SigninForm: React.FC = () => {
 	};
 
 	React.useEffect(() => {
-		if (isAuthenticated && localStorage.getItem('access')) {
+		if (selectIsAuth && localStorage.getItem('access')) {
 			navigate('/home');
 		}
-	}, [navigate, isAuthenticated]);
+	}, [navigate, selectIsAuth]);
 
 	return (
 		<>
