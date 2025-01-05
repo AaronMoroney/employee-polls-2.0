@@ -1,16 +1,12 @@
-export type Question = {
-    votes: string[],
-    text: string
+export type Option = {
+	votes: string[];
+	text: string;
 };
 
-export interface Questions {
-    id: string;
-    author: string;
-    timestamp: number;
-    optionOne: Question;
-    optionTwo: Question;
-};
-
-export type QuestionsState = {
-    questions: Record<string, Questions>;
-};
+export interface Poll {
+	id: string;
+	author: string;
+	timestamp: number;
+	optionOne: Option;
+	optionTwo: Option;
+}

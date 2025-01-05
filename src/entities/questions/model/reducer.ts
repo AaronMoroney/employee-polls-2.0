@@ -1,32 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { QuestionsState } from './types'
+import { Poll } from './types';
 import * as actions from './actions';
 
 interface State {
-    questions: QuestionsState;
-    votes: string[];
-    text: string;
-    pending: boolean;
+	polls: Poll[];
+	pending: boolean;
 }
 
 const initialState: State = {
-    // TODO: correct this
-    questions: {}, 
-    votes: [], 
-    text: '',
-    pending: false,
-}
+	polls: [],
+	pending: false,
+};
 
-export const questionsReducer = createReducer(initialState, (builder) => {
-    builder.addCase(actions.fetchPosts, (state) => {
-        state.pending = true;
-    })
-    builder.addCase(actions.fetchPostsSuccess, (state, action) => {
-        state.questions = action.payload;
-        state.pending = false;
-    })
-    builder.addCase(actions.fetchPostsError, (state, action) => {
-        state.pending = false;
-    })
+export const pollsReducer = createReducer(initialState, (builder) => {
+	builder.addCase(actions.fetchPolls, (state) => {
+		state.pending = true;
+	});
+	builder.addCase(actions.fetchPollsSuccess, (state, action) => {
+		state.polls = action.payload;
+		state.pending = false;
+	});
+	builder.addCase(actions.fetchPollsError, (state) => {
+		state.pending = false;
+	});
+	builder.addCase(actions.addPoll, (state) => {
+		state.pending = true;
+	});
+	builder.addCase(actions.addPollSuccess, (state, action) => {
+		state.pending = false;
+		state.polls = [...state.polls, action.payload];
+	});
+	builder.addCase(actions.addPollError, (state) => {
+		state.pending = false;
+	});
 });
