@@ -9,6 +9,7 @@ import { usePollActions } from 'entities/questions/model';
 import PollsSwitch from 'features/polls/ui/PollsSwitch';
 import PollsCard from 'features/polls/ui/PollsCard';
 import { usePollState } from 'entities/questions/model';
+import { Poll } from 'entities/questions/model/types';
 
 const styles = {
 	header: {
@@ -41,6 +42,7 @@ const styles = {
 	},
 };
 
+// check the pattern. is this the correct way to do this?
 const Home = () => {
 	const { fetchPolls } = usePollActions();
 	const { polls } = usePollState();
@@ -93,9 +95,9 @@ const Home = () => {
 				</Box>
 			</Box>
 			<Box sx={styles.polls__container}>
-				{Object.keys(polls).length > 0 ? (
-					Object.keys(polls).map((poll) => (
-						<PollsCard key={poll} question={polls[poll]} />
+				{polls.length > 0 ? (
+					polls.map((poll: Poll) => (
+						<PollsCard key={poll.id} poll={poll} />
 					))
 				) : (
 					<Typography variant='h6' gutterBottom>
