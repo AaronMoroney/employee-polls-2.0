@@ -1,14 +1,14 @@
 import { all, fork } from 'redux-saga/effects';
 
-import { questionsWatcher }from 'entities/questions/model/sagas';
+import { pollWatcher } from 'entities/questions/model/sagas';
 import { isAuthWatcher } from 'entities/authUsers/model/sagas';
 import { usersWatcher } from 'entities/users/model/sagas';
 
 function* rootSaga() {
-    yield all([
-        fork(questionsWatcher),
-        fork(isAuthWatcher),
-        fork(usersWatcher),
-    ]);
+	yield all([
+		fork(pollWatcher), 
+		fork(isAuthWatcher), 
+		fork(usersWatcher)
+	]);
 }
 export default rootSaga;
