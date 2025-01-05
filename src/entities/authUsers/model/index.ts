@@ -11,10 +11,14 @@ import {
     loginUsersFailure,
     logoutUser, 
 } from './actions';
-import { selectIsAuth } from './selectors';
+import { selectIsAuth, selectAuthUser } from './selectors';
+import { AppState } from 'app/providers/with-redux/types';
 
 export function useIsAuthState() {
-    return useSelector(selectIsAuth);
+    return useSelector((state: AppState) => ({
+        selectIsAuth: selectIsAuth(state),
+        selectAuthUser: selectAuthUser(state),
+    }));
 }
 
 export const useUserActions = () => {

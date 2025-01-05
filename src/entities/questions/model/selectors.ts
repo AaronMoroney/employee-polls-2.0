@@ -2,9 +2,8 @@ import { createSelector } from 'reselect';
 
 import { AppState } from 'app/providers/with-redux/types';
 
-export const selectQuestions = (state: AppState) => state.questions.questions;
+export const selectPolls = (state: AppState) => state.polls.polls;
 
-export const questionsSelector = createSelector(
-    [selectQuestions],
-    (questions) => ({ questions })
-);
+export const pollsSelector = createSelector([selectPolls], (polls) => ({
+	polls,
+}));

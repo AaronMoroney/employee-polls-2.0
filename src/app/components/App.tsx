@@ -21,10 +21,10 @@ interface AuthWrapper {
 }
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const isAuth = useIsAuthState();
+	const { selectIsAuth } = useIsAuthState();
 	const hasAuthKey = localStorage.getItem('access');
 
-	return isAuth && hasAuthKey 
+	return selectIsAuth && hasAuthKey 
 		? <>{children}</> 
 		: <Navigate to='/' replace />;
 };

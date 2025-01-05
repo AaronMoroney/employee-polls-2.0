@@ -16,7 +16,7 @@ const START_HOUR = '09:00';
 const END_HOUR = '17:00';
 
 const Time = () => {
-    const [bangkokTime, setBangkokTime] = useState('')
+    const [dublinTime, setDublinTime] = useState('')
     
     const getTimeInTimeZone = (timeZone: string) => {
         const now = new Date();
@@ -31,12 +31,12 @@ const Time = () => {
     };
 
     useEffect(() => {
-        setBangkokTime(
-            getTimeInTimeZone('Asia/Bangkok')
+        setDublinTime(
+            getTimeInTimeZone('Europe/Dublin')
         );
     }, []);
 
-    const icon = bangkokTime >= START_HOUR && bangkokTime <= END_HOUR 
+    const icon = dublinTime >= START_HOUR && dublinTime <= END_HOUR 
         ? '🟢' 
         : '🔴';
 
@@ -44,7 +44,7 @@ const Time = () => {
         <>  
             <Box sx={styles.container}>
                 <Typography>
-                    {`${icon} BKK: ${bangkokTime}`}
+                    {`${icon} IE: ${dublinTime}`}
                 </Typography>
             </Box>
         </>

@@ -1,6 +1,6 @@
 import * as React from 'react';
-
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const BackButton = React.memo(() => {
