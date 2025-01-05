@@ -1,5 +1,3 @@
-import { User } from 'entities/users/model/types';
-
 export type SignUpFormType = {
 	email: string;
 	password: string;
@@ -10,6 +8,7 @@ export type SignInFormType = {
 	password: string;
 };
 export type AuthState = {
+	authUser: string;
 	loading: boolean;
 	isAuth: boolean;
 };

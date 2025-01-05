@@ -10,3 +10,7 @@ export const selectIsAuth = createSelector(
     selectIsAuthState,
     (isAuth) => isAuth
 )
+
+export const selectAuthUser = (state: AppState): string => {
+    return state.isAuth.authUser
+}
