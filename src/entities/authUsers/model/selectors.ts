@@ -14,3 +14,6 @@ export const selectIsAuth = createSelector(
 export const selectAuthUser = (state: AppState): string => {
     return state.isAuth.authUser
 }
+export const selectAuthUserId = (state: AppState): string => {
+    return state.isAuth.authUserId
+}

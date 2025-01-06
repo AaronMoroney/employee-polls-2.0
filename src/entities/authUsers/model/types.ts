@@ -8,6 +8,7 @@ export type SignInFormType = {
 	password: string;
 };
 export type AuthState = {
+	authUserId: string;
 	authUser: string;
 	loading: boolean;
 	isAuth: boolean;

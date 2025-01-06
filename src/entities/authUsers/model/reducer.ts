@@ -5,6 +5,7 @@ import * as actions from './actions';
 
 const initialState: AuthState = {
   authUser: '',
+  authUserId: '',
   loading: false,
   isAuth: false,
 };
@@ -14,6 +15,7 @@ export const isAuthReducer = createReducer(initialState, (builder) => {
     state.loading = true;
   })
   builder.addCase(actions.loginUsersSuccess, (state, { payload }) => {
+    state.authUserId = payload.user.id;
     state.authUser = payload.user.email;
     state.loading = false;
     state.isAuth = true;
