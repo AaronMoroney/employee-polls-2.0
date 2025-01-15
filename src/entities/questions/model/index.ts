@@ -9,11 +9,21 @@ import {
 	addPoll,
 	addPollSuccess,
 	addPollError,
-}from './actions';
-import { pollsSelector } from './selectors';
+	fetchSinglePoll, 
+	fetchSinglePollError, 
+	fetchSinglePollSuccess,
+	castVoteRequest, 
+	castVoteSuccess, 
+	castVoteError
+} from './actions';
+import { selectAllPolls, selectSinglePoll } from './selectors';
+import { AppState } from 'app/providers/with-redux/types';
 
 export function usePollState() {
-	return useSelector(pollsSelector);
+	return useSelector((state: AppState) => ({
+		polls: selectAllPolls(state),
+		singlePoll: selectSinglePoll(state),
+	}));
 }
 
 export function usePollActions() {
@@ -29,6 +39,12 @@ export function usePollActions() {
 					addPoll,
 					addPollSuccess,
 					addPollError,
+					fetchSinglePoll, 
+					fetchSinglePollError, 
+					fetchSinglePollSuccess,
+					castVoteRequest, 
+					castVoteSuccess,
+					castVoteError
 				},
 				dispatch
 			),

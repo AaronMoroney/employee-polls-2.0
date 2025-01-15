@@ -10,3 +10,9 @@ export interface Poll {
 	optionOne: Option;
 	optionTwo: Option;
 }
+
+export interface PollsState {
+	allPolls: Poll[];
+	singlePoll: Poll | undefined;
+	pending: boolean;
+}

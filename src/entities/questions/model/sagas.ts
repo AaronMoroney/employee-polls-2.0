@@ -2,7 +2,12 @@ import { put, takeEvery, call, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import * as alerts from 'shared/lib/alert/model/actions';
-import { getPollsReq, addPollsReq } from 'entities/questions/api/api';
+import { 
+	getPollsReq, 
+	addPollsReq, 
+	getSinglePollReq, 
+	castVoteReq 
+} from 'entities/questions/api/api';
 import { patchUsersReq } from 'entities/users/api/api';
 import { selectAuthUserId } from 'entities/authUsers/model/selectors';
 import { Poll } from './types';
@@ -57,9 +62,56 @@ function* addPollSaga({
 	}
 }
 
+function* getSinglePollSaga({
+	payload,
+}: ReturnType<typeof actions.fetchSinglePoll>) {
+	const apiCall = getSinglePollReq(payload);
+	const response = yield call(() => apiCall);
+
+	if (response.error) {
+		yield put(actions.fetchSinglePollError(response.error));
+		return;
+	}
+
+	yield put(actions.fetchSinglePollSuccess(response));
+}
+
+function* castVoteSaga({
+	payload, 
+}: ReturnType<typeof actions.castVoteRequest>) {
+	const apiCall = castVoteReq(payload.option, payload.pollId, payload.authUserId);
+	const response = yield call(() => apiCall);
+
+	if (response.error) {
+		yield put(actions.castVoteError(response.error));
+		yield put(
+			alerts.showAlert({
+				message: 'failed to vote, please try again',
+				severity: 'error',
+				isOpen: true,
+			})
+		);
+		return;
+	}
+
+	yield put(
+		alerts.showAlert({
+			message: 'vote cast successfully',
+			severity: 'success',
+			isOpen: true,
+		})
+	);
+
+	yield put(actions.castVoteSuccess(
+		response
+	));
+}
+
 export function* pollWatcher() {
 	yield takeEvery(actions.fetchPolls, getPollsSaga);
-	yield takeEvery(actions.addPoll, addPollSaga);
+	yield takeEvery(actions.addPoll, addPollSaga);	
+	yield takeEvery(actions.fetchSinglePoll, getSinglePollSaga);
+	yield takeEvery(actions.castVoteRequest, castVoteSaga);
 }
 
 export default [pollWatcher];
