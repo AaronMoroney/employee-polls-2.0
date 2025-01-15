@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-	Paper,
-	Box,
+	Paper, 
+	Box, 
 	Typography, 
 	Modal, 
 	Button 
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
-import CreateModalCard from 'features/polls/ui/CreatePollModal';
+import CreateModalCard from 'features/polls/ui/CreatePoll/CreatePollModal';
 
 const styles = {
 	modal__card__content: {

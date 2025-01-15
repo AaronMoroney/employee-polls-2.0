@@ -2,12 +2,13 @@ import * as React from 'react';
 import { 
 	Box, 
 	Typography, 
-	Chip 
+	Chip, 
+	Paper,
 } from '@mui/material';
 
 import { usePollActions } from 'entities/questions/model';
 import PollsSwitch from 'features/polls/ui/PollsSwitch';
-import PollsCard from 'features/polls/ui/PollsCard';
+import PollsItem from 'features/polls/ui/PollsCard/PollsItem';
 import { usePollState } from 'entities/questions/model';
 import { Poll } from 'entities/questions/model/types';
 
@@ -30,6 +31,11 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 	},
+	pollCard: {
+		padding: '1% 2%',
+		marginBottom: '2%',
+		borderRadius: '30px',
+	},
 	polls__container: {
 		height: '95%',
 		overflow: 'overlay',
@@ -42,7 +48,6 @@ const styles = {
 	},
 };
 
-// check the pattern. is this the correct way to do this?
 const Home = () => {
 	const { fetchPolls } = usePollActions();
 	const { polls } = usePollState();
@@ -97,7 +102,9 @@ const Home = () => {
 			<Box sx={styles.polls__container}>
 				{polls.length > 0 ? (
 					polls.map((poll: Poll) => (
-						<PollsCard key={poll.id} poll={poll} />
+						<Paper sx={styles.pollCard}>
+							<PollsItem key={poll.id} poll={poll} />
+						</Paper>
 					))
 				) : (
 					<Typography variant='h6' gutterBottom>
