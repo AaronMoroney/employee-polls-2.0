@@ -1,11 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
-import { 
-	Box, 
-	Typography, 
-	Modal, 
-	Button, 
-} from '@mui/material';
+import { Box, Typography, Modal, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
 import CreatePollModal from './CreatePollModal';
@@ -22,7 +17,7 @@ const styles = {
 		alignItems: 'center',
 		justifyContent: 'space-between',
 	},
-	box:(theme: any) => ({
+	box: (theme: any) => ({
 		position: 'absolute',
 		top: '50%',
 		left: '50%',
@@ -45,7 +40,6 @@ const PopUpModal: React.FC<PopUpModalProps> = ({ openModal, setOpenModal }) => {
 	};
 
 	// TODO: make this modal reusable, header text, and modal card
-
 	return (
 		<>
 			<Modal open={openModal}>

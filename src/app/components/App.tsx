@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { Auth } from 'pages/auth';
 import { Home } from 'pages/home';
 import { Leaderboard } from 'pages/leaderboard';
-import { Question } from 'pages/question';
+import { SinglePoll } from 'pages/poll';
 import { Settings } from 'pages/settings';
 import { Create } from 'pages/create';
 import { Layout } from 'app/components';
@@ -45,10 +45,10 @@ function App() {
 						}
 					/>
 					<Route
-						path='/questions/:question_id'
+						path='/home/questions/:question_id'
 						element={
 							<AuthWrapper>
-								<Question />
+								<SinglePoll />
 							</AuthWrapper>
 						}
 					/>
