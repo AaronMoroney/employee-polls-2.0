@@ -11,7 +11,7 @@ export const addUsersReq = async({
   email: string; 
   password: string;
   avatarURL: string | null;
-  answers: Record<string, string>;
+  answers: string[];
   questions: string[];
 }) => {
   const requestUrl = `${URL}/signup`;

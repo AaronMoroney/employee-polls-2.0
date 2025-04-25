@@ -61,10 +61,10 @@ export const castVoteReq = async(
 
 	const patchData = {
 		[option]: {
-		  ...pollsData[option],
-		  votes: updatedVotes,
+			...pollsData[option],
+			votes: updatedVotes,
 		},
-	  };
+	};
 
 	const method = 'PATCH';
 

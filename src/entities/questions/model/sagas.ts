@@ -47,7 +47,7 @@ function* addPollSaga({
 
 	yield put(actions.addPollSuccess(response));
 
-	const patchCall = patchUsersReq(authUserId, response.id);
+	const patchCall = patchUsersReq(authUserId, response.id, 'questions');
 	const patchResponse = yield call(() => patchCall);
 
 	if (patchResponse.error) {
@@ -105,6 +105,20 @@ function* castVoteSaga({
 	yield put(actions.castVoteSuccess(
 		response
 	));
+
+	const patchCall = patchUsersReq(payload.authUserId, response.id, 'answers');
+	const patchResponse = yield call(() => patchCall);
+
+	if (patchResponse.error) {
+		yield put(
+			alerts.showAlert({
+				message: 'failed to cast vote, please try again',
+				severity: 'error',
+				isOpen: true,
+			})
+		);
+		return;
+	}
 }
 
 export function* pollWatcher() {
