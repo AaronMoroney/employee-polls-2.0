@@ -14,19 +14,23 @@ export const getUsersReq = () => {
 }
 
 //TODO #1: Add custom middlewares/routes, to remove the need for this workaround
-export const patchUsersReq = async(id: string, pollID: string ) => {
+export const patchUsersReq = async(
+  id: string, 
+  pollID: string, 
+  field: 'questions' | 'answers'
+) => {
   const requestUrl = `${URL}/users/${id}`;
 
   const userResponse = await fetch(requestUrl);
   const userData = await userResponse.json();
 
-  const updatedQuestions = Array.isArray(userData.questions)
-    && [...userData.questions, pollID]
+  const updatedData = Array.isArray(userData.questions)
+    && [...userData[field], pollID]
 
   const method = 'PATCH';
 
   const data = {
-    questions: updatedQuestions
+    [field]: updatedData
   };
 
   return fetchRequest(requestUrl, method, data);

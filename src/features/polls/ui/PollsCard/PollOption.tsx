@@ -10,7 +10,7 @@ interface PollOptionProps {
 	poll: Poll;
 	hasVoted: Boolean;
 	handleCastVote: (
-		e: React.MouseEvent<HTMLButtonElement>,
+		option: string,
 		pollId: string,
 		authUserId: string
 	) => void;
@@ -61,7 +61,6 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 		optionTwoPercentage,
 	} = props;
 	const location = useLocation();
-
 
 	if (hasVoted) {
 		return (
@@ -119,7 +118,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 				<Button
 					sx={styles.box__option}
 					value='optionOne'
-					onClick={(e) => handleCastVote(e, poll.id, authUserId)}
+					onClick={() => handleCastVote('optionOne', poll.id, authUserId)}
 				>
 					<LooksOneIcon />
 					<Typography variant='h6'>{poll.optionOne.text}</Typography>
@@ -127,7 +126,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 				<Button
 					sx={styles.box__option}
 					value='optionTwo'
-					onClick={(e) => handleCastVote(e, poll.id, authUserId)}
+					onClick={() => handleCastVote('optionTwo', poll.id, authUserId)}
 				>
 					<LooksTwoIcon />
 					<Typography variant='h6'>{poll.optionTwo.text}</Typography>

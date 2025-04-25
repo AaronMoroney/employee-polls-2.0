@@ -3,14 +3,11 @@ export interface User {
     password: string,
     email: string,
     avatarURL: null,
-    answers: UserAnswers | [],
+    answers: string[] | [],
     questions: string[] | [],
+    engagement: number,
 }
 
-export type UserAnswers = {
-    [key: number]: 'optionOne' | 'optionTwo'
-}
-   
 export interface UsersState {
     users: User[];
 }

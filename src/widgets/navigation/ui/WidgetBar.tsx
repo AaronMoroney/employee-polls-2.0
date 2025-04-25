@@ -7,7 +7,7 @@ import {
     Time,
     TodaysDate, 
     Engagement,
-} from 'widgets/calender'
+} from 'widgets/information';
 
 const styles = {
     root: {

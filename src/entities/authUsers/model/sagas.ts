@@ -16,7 +16,7 @@ function* addUsersSaga({
 		email,
 		password,
 		avatarURL: null,
-		answers: {},
+		answers: [],
 		questions: [],
 	};
 

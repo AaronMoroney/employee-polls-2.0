@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {
 	Avatar,
@@ -17,6 +18,8 @@ import { checkHasVoted, calculateOptionPercentage } from 'shared/helpers/polls';
 import PollOption from './PollOption';
 import { useIsAuthState } from 'entities/authUsers/model';
 import { usePollActions } from 'entities/questions/model';
+import { useUsersState } from 'entities/users/model';
+import { User } from 'entities/users/model/types';
 
 const styles = {
 	pollCard__header: {
@@ -63,34 +66,44 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 	const location = useLocation();
 	const { selectAuthUserId } = useIsAuthState();
 	const { castVoteRequest } = usePollActions();
+	const { users } = useUsersState();
+	const { selectUserEngagementScore } = useUsersState();
 	const [hasVoted, setHasVoted] = React.useState(false);
 
 	if (location.pathname === '/home' && !poll) {
 		return <CircularProgress />;
 	}
 
-	const totalVotes = poll.optionOne.votes.length + poll.optionTwo.votes.length;
+	const totalVotes =
+		poll.optionOne.votes.length + poll.optionTwo.votes.length;
+
 	const optionOnePercentage = calculateOptionPercentage(
-		poll.optionOne.votes.length, totalVotes
+		poll.optionOne.votes.length,
+		totalVotes
 	);
+
 	const optionTwoPercentage = calculateOptionPercentage(
-		poll.optionTwo.votes.length, totalVotes
+		poll.optionTwo.votes.length,
+		totalVotes
 	);
+
+	const pollAuthor = users.find((user: User) => user.email === poll.author);
+
+	const engagement =
+		pollAuthor && useSelector(selectUserEngagementScore(pollAuthor.id));
 
 	const handleVote = (
-		e: React.MouseEvent<HTMLButtonElement>, 
-		pollId: string, 
+		option: string,
+		pollId: string,
 		authUserId: string
 	) => {
-		const { value } = e.target as HTMLButtonElement;
-
 		castVoteRequest({
-			option: value, 
+			option,
 			pollId,
-			authUserId, 
+			authUserId,
 		});
 		setHasVoted(true);
-	}
+	};
 
 	React.useEffect(() => {
 		setHasVoted(checkHasVoted(poll, selectAuthUserId));
@@ -101,15 +114,15 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 			<Box sx={styles.pollCard__header__container}>
 				<Box sx={styles.pollCard__header}>
 					<Avatar sx={styles.avatar} />
-					<p>{`${poll.author} · 66% engagment`}</p>
+					<p>{`${poll.author} · ${engagement}% engagement`}</p>
 				</Box>
 			</Box>
 			<CardContent sx={styles.card__content}>
 				<Typography gutterBottom>Would you rather?</Typography>
 				<Divider sx={styles.divider__top} />
-				<PollOption 
-					poll={poll} 
-					hasVoted={hasVoted} 
+				<PollOption
+					poll={poll}
+					hasVoted={hasVoted}
 					handleCastVote={handleVote}
 					authUserId={selectAuthUserId}
 					totalVotes={totalVotes}
@@ -119,7 +132,7 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 			</CardContent>
 			<Box sx={styles.controls}>
 				<Box sx={styles.engagement}>
-					<Typography sx={{paddingRight: '5px'}}>
+					<Typography sx={{ paddingRight: '5px' }}>
 						{`${totalVotes} votes`}
 					</Typography>
 					<Typography>0 Comments</Typography>

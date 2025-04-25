@@ -32,8 +32,6 @@ const SinglePoll: React.FC = () => {
 		fetchSinglePoll(question_id);
 	}, [question_id]);
 
-	console.log(singlePoll);
-
 	if (!singlePoll) {
 		return <CircularProgress />;
 	}
