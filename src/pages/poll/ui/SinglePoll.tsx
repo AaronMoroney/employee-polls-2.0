@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { usePollActions } from 'entities/questions/model';
 import { usePollState } from 'entities/questions/model';
 import { PollsItem } from 'features/polls';
-import { PollsEngagement } from 'features/polls';
+import { ReactionPanel } from 'features/polls';
 
 const styles = {
 	pollCard: {
@@ -43,7 +43,7 @@ const SinglePoll: React.FC = () => {
 			</Typography>
 			<Paper sx={styles.pollCard}>
 				<PollsItem poll={singlePoll} />
-				<PollsEngagement poll={singlePoll} />
+				<ReactionPanel poll={singlePoll} />
 			</Paper>
 		</>
 	);

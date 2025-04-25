@@ -21,8 +21,7 @@ const POSITION = 1;
 const TableUI: React.FC<TableProps> = (props) => {
 	const { users } = props;
 
-	let positionedUsers: User[] = [];
-	positionedUsers = users && findUserPosition(users);
+	const positionedUsers = users && findUserPosition(users);
 
 	return (
 		<>
