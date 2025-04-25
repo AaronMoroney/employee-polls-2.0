@@ -13,13 +13,14 @@ export const selectUserEngagementScore = (userId: string) =>
                 return 0;
             }
 
-			const score = user.questions.length + user.answers.length;
+            // number of questions and answers a user has
+            // NB: user cannot ask a poll on another users poll
+			const userScore = user.questions.length + user.answers.length;
 
-            if (score === 0) {
+            if (userScore === 0) {
                 return 0;
             }
 
-            const total = poll.allPolls.length * 2;
-			return Math.floor(( score / total ) * 100);
+			return Math.floor(( userScore / poll.allPolls.length ) * 100);
 		}
 	);
