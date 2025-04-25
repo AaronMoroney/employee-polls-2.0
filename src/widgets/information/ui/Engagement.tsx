@@ -23,7 +23,7 @@ const Engagement = () => {
 		if (engagement < 33) {
 			return 'red';
 		};
-		
+
 		if (engagement < 66) {
 			return 'yellow';
 		}

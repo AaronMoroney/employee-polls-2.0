@@ -34,7 +34,7 @@ const styles = {
 	}
 };
 
-const PollsEngagement: React.FC<PollsEngagementProps> = (props) => {
+const ReactionsPanel: React.FC<PollsEngagementProps> = (props) => {
 	const { poll } = props;
 
 	return (
@@ -62,4 +62,4 @@ const PollsEngagement: React.FC<PollsEngagementProps> = (props) => {
 	);
 };
 
-export default PollsEngagement;
+export default ReactionsPanel;

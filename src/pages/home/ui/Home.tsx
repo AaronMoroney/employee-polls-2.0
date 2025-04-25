@@ -6,11 +6,12 @@ import {
 	Paper,
 } from '@mui/material';
 
-import { usePollActions } from 'entities/questions/model';
 import PollsSwitch from 'features/polls/ui/PollsSwitch';
 import PollsItem from 'features/polls/ui/PollsCard/PollsItem';
-import { usePollState } from 'entities/questions/model';
 import { Poll } from 'entities/questions/model/types';
+import { usePollActions } from 'entities/questions/model';
+import { usePollState } from 'entities/questions/model';
+import { useUsersActions } from 'entities/users/model';
 
 const styles = {
 	header: {
@@ -50,12 +51,14 @@ const styles = {
 
 const Home = () => {
 	const { fetchPolls } = usePollActions();
+	const { getUsers } = useUsersActions();
 	const { polls } = usePollState();
 	const [isFiltered, setIsFiltered] = React.useState(true);
 	const [activeChip, setActiveChip] = React.useState('all');
 
 	React.useEffect(() => {
 		fetchPolls();
+		getUsers();
 	}, []);
 
 	const handleIsFiltered = React.useCallback(() => {

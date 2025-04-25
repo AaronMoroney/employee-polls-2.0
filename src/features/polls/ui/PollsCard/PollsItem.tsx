@@ -13,13 +13,13 @@ import {
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-import { Poll } from 'entities/questions/model/types';
-import { checkHasVoted, calculateOptionPercentage } from 'shared/helpers/polls';
 import PollOption from './PollOption';
+import { checkHasVoted, calculateOptionPercentage } from 'shared/helpers/polls';
 import { useIsAuthState } from 'entities/authUsers/model';
 import { usePollActions } from 'entities/questions/model';
 import { useUsersState } from 'entities/users/model';
 import { User } from 'entities/users/model/types';
+import { Poll } from 'entities/questions/model/types';
 
 const styles = {
 	pollCard__header: {
@@ -74,8 +74,15 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 		return <CircularProgress />;
 	}
 
-	const totalVotes =
-		poll.optionOne.votes.length + poll.optionTwo.votes.length;
+	const totalVotes = React.useMemo(
+		() => poll.optionOne.votes.length + poll.optionTwo.votes.length,
+		[poll]
+	);
+
+	const pollAuthor = React.useMemo(
+		() => users.find((user: User) => user.email === poll.author),
+		[users, poll.author]
+	);
 
 	const optionOnePercentage = calculateOptionPercentage(
 		poll.optionOne.votes.length,
@@ -86,8 +93,6 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 		poll.optionTwo.votes.length,
 		totalVotes
 	);
-
-	const pollAuthor = users.find((user: User) => user.email === poll.author);
 
 	const engagement =
 		pollAuthor && useSelector(selectUserEngagementScore(pollAuthor.id));
