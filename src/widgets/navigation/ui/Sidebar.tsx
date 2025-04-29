@@ -49,7 +49,7 @@ const Sidebar = () => {
     return (
         <Paper sx={styles.root}>
             <MenuList sx={styles.MenuList}>
-                <div>
+                <div role="navigation">
                     <Link 
                         to="/home" 
                         style={styles.link}
@@ -93,7 +93,7 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                <div>
+                <div role="navigation">
                     <MenuItem onClick={logout}>
                         <ListItemIcon>
                             <LogoutIcon/>

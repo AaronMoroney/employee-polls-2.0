@@ -34,6 +34,7 @@ const styles = {
 	},
 	error: (theme: Theme) => ({
 		color: theme.palette.error.main,
+		mb: 2,
 	}),
 };
 

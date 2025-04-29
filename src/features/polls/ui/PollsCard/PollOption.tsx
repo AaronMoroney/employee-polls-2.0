@@ -1,14 +1,22 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Typography, Button } from '@mui/material';
+import {
+	Box,
+	Typography,
+	FormControl,
+	RadioGroup,
+	FormControlLabel,
+	Radio,
+} from '@mui/material';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 
 import { Poll } from 'entities/questions/model/types';
+import PollEngagement from './PollEngagement';
 
 interface PollOptionProps {
 	poll: Poll;
-	hasVoted: Boolean;
+	hasVoted: boolean;
 	handleCastVote: (
 		option: string,
 		pollId: string,
@@ -45,6 +53,11 @@ const styles = {
 		height: '100%',
 		opacity: 0.1,
 	}),
+	box__cast__vote: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between',
+	},
 };
 
 const HOMEPAGE = '/home';
@@ -56,11 +69,16 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 		handleCastVote,
 		authUserId,
 		hasVoted,
-		totalVotes, 
-		optionOnePercentage, 
+		totalVotes,
+		optionOnePercentage,
 		optionTwoPercentage,
 	} = props;
 	const location = useLocation();
+	const [selectedOption, setSelectedOption] = React.useState('');
+
+	const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSelectedOption(e.target.value);
+	};
 
 	if (hasVoted) {
 		return (
@@ -93,6 +111,16 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 						)}
 					/>
 				</Box>
+				<Box>
+					<PollEngagement
+						totalVotes={totalVotes}
+						hasVoted={hasVoted}
+						poll={poll}
+						handleCastVote={handleCastVote}
+						selectedOption={selectedOption}
+						authUserId={authUserId}
+					/>
+				</Box>
 			</>
 		);
 	}
@@ -108,6 +136,16 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 					<LooksTwoIcon />
 					<Typography variant='h6'>{poll.optionTwo.text}</Typography>
 				</Box>
+				<Box>
+					<PollEngagement
+						totalVotes={totalVotes}
+						hasVoted={hasVoted}
+						poll={poll}
+						handleCastVote={handleCastVote}
+						selectedOption={selectedOption}
+						authUserId={authUserId}
+					/>
+				</Box>
 			</>
 		);
 	}
@@ -115,22 +153,34 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 	if (location.pathname === `${POLLPAGE}/${poll.id}` && !hasVoted) {
 		return (
 			<>
-				<Button
-					sx={styles.box__option}
-					value='optionOne'
-					onClick={() => handleCastVote('optionOne', poll.id, authUserId)}
-				>
-					<LooksOneIcon />
-					<Typography variant='h6'>{poll.optionOne.text}</Typography>
-				</Button>
-				<Button
-					sx={styles.box__option}
-					value='optionTwo'
-					onClick={() => handleCastVote('optionTwo', poll.id, authUserId)}
-				>
-					<LooksTwoIcon />
-					<Typography variant='h6'>{poll.optionTwo.text}</Typography>
-				</Button>
+				<Box sx={styles.box__cast__vote}>
+					<FormControl component='fieldset'>
+						<RadioGroup
+							aria-label='poll options'
+							name='pollOptions'
+							onChange={(e) => handleOptionChange(e)}
+						>
+							<FormControlLabel
+								value='optionOne'
+								control={<Radio />}
+								label={poll.optionOne.text}
+							/>
+							<FormControlLabel
+								value='optionTwo'
+								control={<Radio />}
+								label={poll.optionTwo.text}
+							/>
+						</RadioGroup>
+					</FormControl>
+					<PollEngagement
+						totalVotes={totalVotes}
+						hasVoted={hasVoted}
+						poll={poll}
+						handleCastVote={handleCastVote}
+						selectedOption={selectedOption}
+						authUserId={authUserId}
+					/>
+				</Box>
 			</>
 		);
 	}

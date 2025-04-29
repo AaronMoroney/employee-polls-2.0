@@ -40,7 +40,14 @@ const ReactionsPanel: React.FC<PollsEngagementProps> = (props) => {
 	return (
 		<>
 			<Box sx={styles.card__content}>
-                <Box sx={styles.addComment}>
+				<Box sx={styles.comments}>
+                    <Avatar sx={styles.avatar} />
+					<Typography>a comment</Typography>
+				</Box>
+                <Divider>
+					<Chip label="join the discussion"/>
+				</Divider>
+				<Box sx={styles.addComment}>
                     <Avatar sx={styles.avatar} />
                     <TextField 
                         fullWidth 
@@ -50,13 +57,6 @@ const ReactionsPanel: React.FC<PollsEngagementProps> = (props) => {
                         <AddCommentIcon />
                     </Button>
                 </Box>
-                <Divider>
-					<Chip label="join the discussion"/>
-				</Divider>
-				<Box sx={styles.comments}>
-                    <Avatar sx={styles.avatar} />
-					<Typography>a comment</Typography>
-				</Box>
 			</Box>
 		</>
 	);

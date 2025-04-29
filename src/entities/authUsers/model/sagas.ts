@@ -7,7 +7,6 @@ import * as alerts from 'shared/lib/alert/model/actions';
 function* addUsersSaga({
 	payload: { email, password },
 }: ReturnType<typeof actions.addUsers>) {
-	// TODO: is this coming from components anyway?
 	if (!email || !password) {
 		return;
 	}
@@ -23,19 +22,15 @@ function* addUsersSaga({
 	const apiCall = addUsersReq(initialUsersData);
 	const response = yield call(() => apiCall);
 
-	if (response.error) {
-		yield put(actions.addUsersFailure());
-		yield put(
-			alerts.showAlert({
-				message: response.error,
-				severity: 'error',
-				isOpen: true,
-			})
-		);
-		return;
-	}
-
 	yield put(actions.addUsersSuccess(response));
+
+	yield put(
+		alerts.showAlert({
+			message: 'user created successfully',
+			severity: 'success',
+			isOpen: true,
+		})
+	);
 }
 
 function* loginUsersSaga({

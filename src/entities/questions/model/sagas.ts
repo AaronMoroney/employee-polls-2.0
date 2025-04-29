@@ -60,6 +60,14 @@ function* addPollSaga({
 		);
 		return;
 	}
+
+	yield put(
+		alerts.showAlert({
+			message: 'Poll added successfully',
+			severity: 'success',
+			isOpen: true,
+		})
+	);
 }
 
 function* getSinglePollSaga({

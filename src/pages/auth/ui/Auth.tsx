@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { 
 	Box, 
-	Link, 
+	Button,
 } from '@mui/material';
 
 import { SignupForm, SigninForm } from 'features/auth';
@@ -24,6 +24,11 @@ const styles = {
 		justifyContent: "center",
 		alignItems: "center",
 	},
+	button: {
+		textTransform: "none", 
+		padding: 0, 
+		minWidth: "auto" 
+	}
 };
 
 const Auth = () => {
@@ -43,9 +48,9 @@ const Auth = () => {
 			<Box sx={styles.authContainer}>
 				<Box sx={styles.formContainer}>
 					<h2>{isNewMember ? "Login" : "Signup"}</h2>
-					<Link onClick={handleMemberStatus}>
+					<Button onClick={handleMemberStatus} sx={styles.button}>
 						<p>{isNewMember ? "Not a member? Signup" : "Already a member? Login"}</p>
-					</Link>
+					</Button>
 					{isNewMember 
 						? <SigninForm/> 
 						: <SignupForm 
