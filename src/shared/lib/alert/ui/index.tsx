@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { Snackbar, Slide, Alert, IconButton } from '@mui/material';
+import { 
+	Snackbar, 
+	Slide, 
+	Alert, 
+	IconButton 
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { useAlertState } from 'shared/lib/alert/model';
@@ -35,6 +40,7 @@ export const AlertBar = () => {
 				<Alert 
 					severity={severityStyle(severity)} 
 					variant='filled' 
+					role='alert'
 					action={
 						<IconButton
 							aria-label="close"

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { 
 	Box, 
-	Typography, 
-	Chip, 
+	Typography,  
 	Paper,
 } from '@mui/material';
 
@@ -24,13 +23,6 @@ const styles = {
 		display: 'flex',
 		flexDirextion: 'row',
 		alignItems: 'center',
-	},
-	chip: {
-		mr: 1,
-	},
-	chip__container: {
-		display: 'flex',
-		flexDirection: 'column',
 	},
 	pollCard: {
 		padding: '1% 2%',
@@ -54,7 +46,6 @@ const Home = () => {
 	const { getUsers } = useUsersActions();
 	const { polls } = usePollState();
 	const [isFiltered, setIsFiltered] = React.useState(true);
-	const [activeChip, setActiveChip] = React.useState('all');
 
 	React.useEffect(() => {
 		fetchPolls();
@@ -63,11 +54,6 @@ const Home = () => {
 
 	const handleIsFiltered = React.useCallback(() => {
 		setIsFiltered(!isFiltered);
-	}, []);
-
-	const handleActiveChip = React.useCallback((e) => {
-		const { innerText } = e.target;
-		setActiveChip(innerText);
 	}, []);
 
 	return (
@@ -79,27 +65,7 @@ const Home = () => {
 					</Typography>
 				</Box>
 				<Box>
-					{activeChip === 'polls' && (
-						<PollsSwitch onClick={handleIsFiltered} />
-					)}
-					<Chip
-						sx={styles.chip}
-						label='all'
-						variant={activeChip === 'all' ? 'filled' : 'outlined'}
-						onClick={handleActiveChip}
-					/>
-					<Chip
-						sx={styles.chip}
-						label='posts'
-						variant={activeChip === 'posts' ? 'filled' : 'outlined'}
-						onClick={handleActiveChip}
-					/>
-					<Chip
-						sx={styles.chip}
-						label='polls'
-						variant={activeChip === 'polls' ? 'filled' : 'outlined'}
-						onClick={handleActiveChip}
-					/>
+					<PollsSwitch onClick={handleIsFiltered} />
 				</Box>
 			</Box>
 			<Box sx={styles.polls__container}>
