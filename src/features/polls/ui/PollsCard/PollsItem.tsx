@@ -6,12 +6,9 @@ import {
 	Box,
 	CardContent,
 	Typography,
-	Button,
 	Divider,
 	CircularProgress,
 } from '@mui/material';
-import HowToVoteIcon from '@mui/icons-material/HowToVote';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import PollOption from './PollOption';
 import { checkHasVoted, calculateOptionPercentage } from 'shared/helpers/polls';
@@ -38,8 +35,7 @@ const styles = {
 		marginRight: '10px',
 	},
 	card__content: {
-		padding: '4px 16px',
-		marginBottom: '10px',
+		padding: '4px ',
 	},
 	controls: {
 		display: 'flex',
@@ -47,10 +43,6 @@ const styles = {
 		justifyContent: 'space-between',
 		padding: '0px 16px',
 		alignItems: 'baseline',
-	},
-	engagement: {
-		display: 'flex',
-		flexDirection: 'row',
 	},
 	divider__top: {
 		margin: '10px 0px',
@@ -94,8 +86,9 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 		totalVotes
 	);
 
-	const engagement =
-		pollAuthor && useSelector(selectUserEngagementScore(pollAuthor.id));
+	const engagement = useSelector(
+		pollAuthor ? selectUserEngagementScore(pollAuthor.id) : () => null
+	);
 
 	const handleVote = (
 		option: string,
@@ -135,27 +128,6 @@ const PollsItem: React.FC<PollsCardsProps> = (props) => {
 					optionTwoPercentage={optionTwoPercentage}
 				/>
 			</CardContent>
-			<Box sx={styles.controls}>
-				<Box sx={styles.engagement}>
-					<Typography sx={{ paddingRight: '5px' }}>
-						{`${totalVotes} votes`}
-					</Typography>
-					<Typography>0 Comments</Typography>
-				</Box>
-				<Box>
-					<Button>
-						<FavoriteBorderIcon />0
-					</Button>
-					{location.pathname === '/home' && (
-						<Link to={`questions/${poll.id}`}>
-							<Button>
-								<HowToVoteIcon />
-								VOTE
-							</Button>
-						</Link>
-					)}
-				</Box>
-			</Box>
 		</>
 	);
 };

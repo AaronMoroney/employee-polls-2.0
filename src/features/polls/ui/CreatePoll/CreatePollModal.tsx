@@ -106,7 +106,7 @@ const CreatePollModal: React.FC<ModalCardProps> = (props) => {
 			<Button
 				fullWidth
 				variant='contained'
-				disabled={optionOne === '' || optionTwo === ''}
+				disabled={optionOne === '' || optionTwo === '' || optionOne === optionTwo}
 				onClick={handleCreatePoll}
 			>
 				<AddIcon />

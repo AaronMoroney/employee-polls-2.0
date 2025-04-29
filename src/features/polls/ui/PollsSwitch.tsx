@@ -17,7 +17,7 @@ const PollsSwitch: React.FC<PollSwitchProps> = () => {
         <>
             <FormControlLabel
                 sx={styles.container}
-                label="Complete"
+                label="Complete only"
                 control={<PollsStatusSwitch  />}
                 labelPlacement='start'
             />
