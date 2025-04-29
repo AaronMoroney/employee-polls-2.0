@@ -35,7 +35,6 @@ const SigninForm: React.FC = () => {
 	const navigate = useNavigate();
 	const { loginUsers } = useUserActions();
 	const { selectIsAuth } = useIsAuthState();
-
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [signinForm, setSigninForm] = React.useState<SignInFormType>({
 		email: '',
